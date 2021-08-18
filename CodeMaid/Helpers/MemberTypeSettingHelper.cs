@@ -23,6 +23,7 @@ namespace SteveCadwallader.CodeMaid.Helpers
         private static readonly CachedSetting<MemberTypeSetting> CachedMethodSettings;
         private static readonly CachedSetting<MemberTypeSetting> CachedPropertySettings;
         private static readonly CachedSetting<MemberTypeSetting> CachedStructSettings;
+        private static readonly CachedSetting<MemberTypeSetting> CachedDisposeSettings;
 
         #endregion Fields
 
@@ -45,6 +46,7 @@ namespace SteveCadwallader.CodeMaid.Helpers
             CachedMethodSettings = new CachedSetting<MemberTypeSetting>(() => Settings.Default.Reorganizing_MemberTypeMethods, x => (MemberTypeSetting)x);
             CachedPropertySettings = new CachedSetting<MemberTypeSetting>(() => Settings.Default.Reorganizing_MemberTypeProperties, x => (MemberTypeSetting)x);
             CachedStructSettings = new CachedSetting<MemberTypeSetting>(() => Settings.Default.Reorganizing_MemberTypeStructs, x => (MemberTypeSetting)x);
+            CachedDisposeSettings = new CachedSetting<MemberTypeSetting>(() => Settings.Default.Reorganizing_MemberTypeDispose, x => (MemberTypeSetting)x);
         }
 
         #endregion Constructors
@@ -58,7 +60,7 @@ namespace SteveCadwallader.CodeMaid.Helpers
         {
             ClassSettings, ConstructorSettings, DelegateSettings, DestructorSettings,
             EnumSettings, EventSettings, FieldSettings, IndexerSettings,
-            InterfaceSettings, MethodSettings, PropertySettings, StructSettings
+            InterfaceSettings, MethodSettings, PropertySettings, StructSettings, DisposeSettings
         };
 
         /// <summary>
@@ -121,6 +123,11 @@ namespace SteveCadwallader.CodeMaid.Helpers
         /// </summary>
         public static MemberTypeSetting StructSettings => CachedStructSettings.Value;
 
+        /// <summary>
+        /// Gets the settings associated with the <see cref="KindCodeItem.Struct"/> type.
+        /// </summary>
+        public static MemberTypeSetting DisposeSettings => CachedDisposeSettings.Value;
+
         #endregion Properties
 
         #region Methods
@@ -146,6 +153,7 @@ namespace SteveCadwallader.CodeMaid.Helpers
                 case KindCodeItem.Method: return MethodSettings;
                 case KindCodeItem.Property: return PropertySettings;
                 case KindCodeItem.Struct: return StructSettings;
+                case KindCodeItem.Dispose: return DisposeSettings;
                 default: return null;
             }
         }

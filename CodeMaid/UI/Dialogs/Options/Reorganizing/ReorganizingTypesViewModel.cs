@@ -36,7 +36,8 @@ namespace SteveCadwallader.CodeMaid.UI.Dialogs.Options.Reorganizing
                 new SettingToOptionMapping<string, MemberTypeSetting>(x => ActiveSettings.Reorganizing_MemberTypeInterfaces, x => Interfaces),
                 new SettingToOptionMapping<string, MemberTypeSetting>(x => ActiveSettings.Reorganizing_MemberTypeMethods, x => Methods),
                 new SettingToOptionMapping<string, MemberTypeSetting>(x => ActiveSettings.Reorganizing_MemberTypeProperties, x => Properties),
-                new SettingToOptionMapping<string, MemberTypeSetting>(x => ActiveSettings.Reorganizing_MemberTypeStructs, x => Structs)
+                new SettingToOptionMapping<string, MemberTypeSetting>(x => ActiveSettings.Reorganizing_MemberTypeStructs, x => Structs),
+                new SettingToOptionMapping<string, MemberTypeSetting>(x => ActiveSettings.Reorganizing_MemberTypeDispose, x => Dispose)
             };
         }
 
@@ -123,6 +124,8 @@ namespace SteveCadwallader.CodeMaid.UI.Dialogs.Options.Reorganizing
         /// </summary>
         public MemberTypeSetting Structs { get; set; }
 
+        public MemberTypeSetting Dispose { get; set; }
+
         #endregion Options
 
         #region Split Command
@@ -175,7 +178,7 @@ namespace SteveCadwallader.CodeMaid.UI.Dialogs.Options.Reorganizing
         /// </summary>
         private void CreateMemberTypesFromCurrentState()
         {
-            var allMemberTypes = new[] { Classes, Constructors, Delegates, Destructors, Enums, Events, Fields, Indexers, Interfaces, Methods, Properties, Structs };
+            var allMemberTypes = new[] { Classes, Constructors, Delegates, Destructors, Enums, Events, Fields, Indexers, Interfaces, Methods, Properties, Structs, Dispose };
             foreach (var memberType in allMemberTypes)
             {
                 memberType.PropertyChanged += OnMemberTypeSettingPropertyChanged;

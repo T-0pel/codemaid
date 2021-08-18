@@ -109,6 +109,7 @@ namespace SteveCadwallader.CodeMaid.Helpers
                 case KindCodeItem.Method: return MemberTypeSettingHelper.MethodSettings.Order;
                 case KindCodeItem.Property: return MemberTypeSettingHelper.PropertySettings.Order;
                 case KindCodeItem.Struct: return MemberTypeSettingHelper.StructSettings.Order;
+                case KindCodeItem.Dispose: return MemberTypeSettingHelper.DisposeSettings.Order;
                 default: return 0;
             }
         }
@@ -121,10 +122,10 @@ namespace SteveCadwallader.CodeMaid.Helpers
             var itemsOrder = new List<vsCMAccess>
             {
                 vsCMAccess.vsCMAccessPublic,
-                vsCMAccess.vsCMAccessAssemblyOrFamily,
-                vsCMAccess.vsCMAccessProject,
-                vsCMAccess.vsCMAccessProjectOrProtected,
                 vsCMAccess.vsCMAccessProtected,
+                vsCMAccess.vsCMAccessProjectOrProtected,
+                vsCMAccess.vsCMAccessProject,
+                vsCMAccess.vsCMAccessAssemblyOrFamily,
                 vsCMAccess.vsCMAccessPrivate
             };
 

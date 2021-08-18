@@ -51,6 +51,9 @@ namespace SteveCadwallader.CodeMaid.Model.CodeItems
         Region,
 
         [Description("Usings")]
-        Using
+        Using,
+
+        [Description("Dispose")]
+        Dispose
     }
 }

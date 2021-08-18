@@ -65,6 +65,8 @@ namespace SteveCadwallader.CodeMaid.Model.CodeItems
                     codeItem = new CodeItemField { CodeVariable = codeElement as CodeVariable2 };
                     break;
 
+                // try adding your custom elements here
+
                 default:
                     return null;
             }

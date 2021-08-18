@@ -1846,7 +1846,22 @@ namespace SteveCadwallader.CodeMaid.Properties {
                 this["Reorganizing_MemberTypeStructs"] = value;
             }
         }
-        
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Dispose||12||Dispose")]
+        public string Reorganizing_MemberTypeDispose
+        {
+            get
+            {
+                return ((string)(this["Reorganizing_MemberTypeDispose"]));
+            }
+            set
+            {
+                this["Reorganizing_MemberTypeDispose"] = value;
+            }
+        }
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
