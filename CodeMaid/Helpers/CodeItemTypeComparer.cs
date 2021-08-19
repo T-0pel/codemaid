@@ -110,6 +110,7 @@ namespace SteveCadwallader.CodeMaid.Helpers
                 case KindCodeItem.Property: return MemberTypeSettingHelper.PropertySettings.Order;
                 case KindCodeItem.Struct: return MemberTypeSettingHelper.StructSettings.Order;
                 case KindCodeItem.Dispose: return MemberTypeSettingHelper.DisposeSettings.Order;
+                case KindCodeItem.Operator: return MemberTypeSettingHelper.OperatorSettings.Order;
                 default: return 0;
             }
         }

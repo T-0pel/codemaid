@@ -20,6 +20,8 @@ namespace SteveCadwallader.CodeMaid.Model.CodeItems
         private readonly Lazy<bool> _isExplicitInterfaceImplementation;
         private readonly Lazy<vsCMOverrideKind> _overrideKind;
         private readonly Lazy<IEnumerable<CodeParameter>> _parameters;
+        private readonly Lazy<bool> _isDispose;
+        private readonly Lazy<bool> _isOperator;
 
         #endregion Fields
 
@@ -30,10 +32,12 @@ namespace SteveCadwallader.CodeMaid.Model.CodeItems
         /// </summary>
         public CodeItemMethod()
         {
-            // Make exceptions for static constructors and explicit interface implementations -
+            // Make exceptions for static constructors, explicit interface implementations, and destructors -
             // which report private access but really do not have a meaningful access level.
             _Access = LazyTryDefault(
-                () => CodeFunction != null && !(IsStatic && IsConstructor) && !IsExplicitInterfaceImplementation ? CodeFunction.Access : vsCMAccess.vsCMAccessPublic);
+                () => CodeFunction != null && !(IsStatic && IsConstructor) && !IsExplicitInterfaceImplementation && !IsDestructor
+                    ? CodeFunction.Access
+                    : vsCMAccess.vsCMAccessPublic);
 
             _Attributes = LazyTryDefault(
                 () => CodeFunction?.Attributes);
@@ -64,6 +68,12 @@ namespace SteveCadwallader.CodeMaid.Model.CodeItems
 
             _TypeString = LazyTryDefault(
                 () => CodeFunction?.Type?.AsString);
+
+            _isDispose = LazyTryDefault(
+                () => CodeFunction?.Name == "Dispose");
+
+            _isOperator = LazyTryDefault(
+                () => CodeFunction != null && CodeFunction.Name.Contains("operator"));
         }
 
         #endregion Constructors
@@ -85,6 +95,16 @@ namespace SteveCadwallader.CodeMaid.Model.CodeItems
                 if (IsDestructor)
                 {
                     return KindCodeItem.Destructor;
+                }
+
+                if (IsDispose)
+                {
+                    return KindCodeItem.Dispose;
+                }
+
+                if (IsOperator)
+                {
+                    return KindCodeItem.Operator;
                 }
 
                 return KindCodeItem.Method;
@@ -129,6 +149,16 @@ namespace SteveCadwallader.CodeMaid.Model.CodeItems
         /// Gets a flag indicating if this method is a destructor.
         /// </summary>
         public bool IsDestructor => _isDestructor.Value;
+
+        /// <summary>
+        /// Gets a flag indicating if this method is a dispose method.
+        /// </summary>
+        public bool IsDispose => _isDispose.Value;
+
+        /// <summary>
+        /// Gets a flag indicating if this method is an operator.
+        /// </summary>
+        public bool IsOperator => _isOperator.Value;
 
         /// <summary>
         /// Gets a flag indicating if this method is an explicit interface implementation.

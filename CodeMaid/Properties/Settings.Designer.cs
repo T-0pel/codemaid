@@ -1864,6 +1864,21 @@ namespace SteveCadwallader.CodeMaid.Properties {
 
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Operators||13||Operators")]
+        public string Reorganizing_MemberTypeOperators
+        {
+            get
+            {
+                return ((string)(this["Reorganizing_MemberTypeOperators"]));
+            }
+            set
+            {
+                this["Reorganizing_MemberTypeOperators"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int Reorganizing_PerformWhenPreprocessorConditionals {
             get {

@@ -54,6 +54,9 @@ namespace SteveCadwallader.CodeMaid.Model.CodeItems
         Using,
 
         [Description("Dispose")]
-        Dispose
+        Dispose,
+
+        [Description("Operators")]
+        Operator
     }
 }

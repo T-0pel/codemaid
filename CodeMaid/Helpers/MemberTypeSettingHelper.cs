@@ -24,6 +24,7 @@ namespace SteveCadwallader.CodeMaid.Helpers
         private static readonly CachedSetting<MemberTypeSetting> CachedPropertySettings;
         private static readonly CachedSetting<MemberTypeSetting> CachedStructSettings;
         private static readonly CachedSetting<MemberTypeSetting> CachedDisposeSettings;
+        private static readonly CachedSetting<MemberTypeSetting> CachedOperatorSettings;
 
         #endregion Fields
 
@@ -47,6 +48,7 @@ namespace SteveCadwallader.CodeMaid.Helpers
             CachedPropertySettings = new CachedSetting<MemberTypeSetting>(() => Settings.Default.Reorganizing_MemberTypeProperties, x => (MemberTypeSetting)x);
             CachedStructSettings = new CachedSetting<MemberTypeSetting>(() => Settings.Default.Reorganizing_MemberTypeStructs, x => (MemberTypeSetting)x);
             CachedDisposeSettings = new CachedSetting<MemberTypeSetting>(() => Settings.Default.Reorganizing_MemberTypeDispose, x => (MemberTypeSetting)x);
+            CachedOperatorSettings = new CachedSetting<MemberTypeSetting>(() => Settings.Default.Reorganizing_MemberTypeOperators, x => (MemberTypeSetting)x);
         }
 
         #endregion Constructors
@@ -59,8 +61,8 @@ namespace SteveCadwallader.CodeMaid.Helpers
         public static IEnumerable<MemberTypeSetting> AllSettings => new[]
         {
             ClassSettings, ConstructorSettings, DelegateSettings, DestructorSettings,
-            EnumSettings, EventSettings, FieldSettings, IndexerSettings,
-            InterfaceSettings, MethodSettings, PropertySettings, StructSettings, DisposeSettings
+            EnumSettings, EventSettings, FieldSettings, IndexerSettings, InterfaceSettings,
+            MethodSettings, PropertySettings, StructSettings, DisposeSettings, OperatorSettings
         };
 
         /// <summary>
@@ -124,9 +126,14 @@ namespace SteveCadwallader.CodeMaid.Helpers
         public static MemberTypeSetting StructSettings => CachedStructSettings.Value;
 
         /// <summary>
-        /// Gets the settings associated with the <see cref="KindCodeItem.Struct"/> type.
+        /// Gets the settings associated with the <see cref="KindCodeItem.Dispose"/> type.
         /// </summary>
         public static MemberTypeSetting DisposeSettings => CachedDisposeSettings.Value;
+
+        /// <summary>
+        /// Gets the settings associated with the <see cref="KindCodeItem.Operator"/> type.
+        /// </summary>
+        public static MemberTypeSetting OperatorSettings => CachedOperatorSettings.Value;
 
         #endregion Properties
 
@@ -154,6 +161,7 @@ namespace SteveCadwallader.CodeMaid.Helpers
                 case KindCodeItem.Property: return PropertySettings;
                 case KindCodeItem.Struct: return StructSettings;
                 case KindCodeItem.Dispose: return DisposeSettings;
+                case KindCodeItem.Operator: return OperatorSettings;
                 default: return null;
             }
         }
