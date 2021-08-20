@@ -364,6 +364,8 @@ namespace SteveCadwallader.CodeMaid.Logic.Reorganizing
             var desiredOrder = new List<BaseCodeItemElement>(currentOrder);
             desiredOrder.Sort(new CodeItemTypeComparer(Settings.Default.Reorganizing_AlphabetizeMembersOfTheSameGroup));
 
+            AdjustOrderOfBackingFields();
+
             // Iterate across the items in the desired order, moving them when necessary.
             for (int desiredIndex = 0; desiredIndex < desiredOrder.Count; desiredIndex++)
             {
@@ -394,6 +396,48 @@ namespace SteveCadwallader.CodeMaid.Logic.Reorganizing
             foreach (var codeItemRegion in codeItemRegions)
             {
                 RecursivelyReorganize(codeItemRegion.Children, codeItemRegion);
+            }
+
+            void AdjustOrderOfBackingFields()
+            {
+                foreach (var element in currentOrder)
+                {
+                    if (element.Kind != KindCodeItem.Field)
+                        continue;
+
+                    BaseCodeItemElement elementForBackingField = null;
+                    foreach (var connectedElement in desiredOrder)
+                    {
+                        if (connectedElement.Kind is KindCodeItem.Property or KindCodeItem.Event
+                            && element.Name.ToLower().Remove(0, 1) == connectedElement.Name.ToLower())
+                        {
+                            elementForBackingField = connectedElement;
+                            break;
+                        }
+
+                        if (connectedElement.Kind is KindCodeItem.Method
+                            && element.TypeString.Contains("MethodInfo")
+                            && element.Name.ToLower().Contains(connectedElement.Name.ToLower()))
+                        {
+                            elementForBackingField = connectedElement;
+                            break;
+                        }
+
+                        if (connectedElement is CodeItemClass codeItemClass
+                            && codeItemClass.ImplementedInterfaces.Any(i => i.Name.Contains("IComparer"))
+                            && element.TypeString.Contains(connectedElement.Name))
+                        {
+                            elementForBackingField = connectedElement;
+                            break;
+                        }
+                    }
+
+                    if (elementForBackingField != null)
+                    {
+                        desiredOrder.Remove(element);
+                        desiredOrder.Insert(desiredOrder.IndexOf(elementForBackingField), element);
+                    }
+                }
             }
         }
 

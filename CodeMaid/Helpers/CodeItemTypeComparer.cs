@@ -2,6 +2,7 @@ using EnvDTE;
 using SteveCadwallader.CodeMaid.Model.CodeItems;
 using SteveCadwallader.CodeMaid.Properties;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SteveCadwallader.CodeMaid.Helpers
 {
@@ -70,9 +71,9 @@ namespace SteveCadwallader.CodeMaid.Helpers
         {
             int typeOffset = CalculateTypeOffset(codeItem);
             int accessOffset = CalculateAccessOffset(codeItem);
-            int explicitOffset = CalculateExplicitInterfaceOffset(codeItem);
-            int constantOffset = CalculateConstantOffset(codeItem);
+            int explicitOffset = 0; //CalculateExplicitInterfaceOffset(codeItem);
             int staticOffset = CalculateStaticOffset(codeItem);
+            int constantOffset = CalculateConstantOffset(codeItem);
             int readOnlyOffset = CalculateReadOnlyOffset(codeItem);
 
             int calc = 0;
@@ -88,7 +89,7 @@ namespace SteveCadwallader.CodeMaid.Helpers
                 calc += typeOffset * 10000;
             }
 
-            calc += (explicitOffset * 1000) + (constantOffset * 100) + (staticOffset * 10) + readOnlyOffset;
+            calc += (explicitOffset * 1000) + (staticOffset * 100) + (constantOffset * 10) + readOnlyOffset;
 
             return calc;
         }

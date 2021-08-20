@@ -1,6 +1,8 @@
 using EnvDTE;
 using EnvDTE80;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace SteveCadwallader.CodeMaid.Model.CodeItems
 {
@@ -9,6 +11,8 @@ namespace SteveCadwallader.CodeMaid.Model.CodeItems
     /// </summary>
     public class CodeItemClass : BaseCodeItemElementParent
     {
+        private readonly Lazy<IEnumerable<CodeElement>> _implementedInterfaces;
+
         #region Constructors
 
         /// <summary>
@@ -31,6 +35,8 @@ namespace SteveCadwallader.CodeMaid.Model.CodeItems
             _Namespace = LazyTryDefault(
                 () => CodeClass?.Namespace?.Name);
 
+            _implementedInterfaces = LazyTryDefault(() => CodeClass?.ImplementedInterfaces.Cast<CodeElement>().ToList() ?? Enumerable.Empty<CodeElement>());
+
             _TypeString = new Lazy<string>(
                 () => "class");
         }
@@ -52,6 +58,11 @@ namespace SteveCadwallader.CodeMaid.Model.CodeItems
         /// Gets or sets the underlying VSX CodeClass.
         /// </summary>
         public CodeClass2 CodeClass { get; set; }
+
+        /// <summary>
+        /// Gets the implemented interfaces of the class.
+        /// </summary>
+        public IEnumerable<CodeElement> ImplementedInterfaces => _implementedInterfaces.Value;
 
         #endregion Properties
     }
